@@ -1,0 +1,15 @@
+# Composer dependencies
+/vendor/
+
+# Node.js dependencies
+/node_modules/
+
+# .env files (local environment variables)
+.env
+.env.local
+
+# Log files
+*.log
+
+# SQLite database files
+*.sqlite
