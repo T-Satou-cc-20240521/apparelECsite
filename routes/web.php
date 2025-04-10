@@ -52,6 +52,8 @@ Route::group(['prefix' => '/user', 'as' => 'user.'], function () {
     Route::get('/product/{id}', [UserProductController::class, 'detail'])->name('product.detail');
     Route::get('/cart/list', [CartController::class, 'list'])->name('cart.list');
     Route::get('/cart/{id}', [CartController::class, 'detail'])->name('cart.detail');
+    Route::get('/search', [SearchController::class, 'top'])->name('search.top');
+    Route::get('/search/results', [SearchController::class, 'results'])->name('search.results');
 });
 
 // 一般ユーザー（ログイン時のみ可）

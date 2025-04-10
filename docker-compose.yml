@@ -29,12 +29,6 @@ services:
             - meilisearch
             - mailpit
             - selenium
-        healthcheck:
-            test: ["CMD", "curl", "-f", "http://localhost:8000"]
-            interval: 30s
-            retries: 3
-            start_period: 10s
-            timeout: 10s
 
     mysql:
         image: 'mysql/mysql-server:8.0'
