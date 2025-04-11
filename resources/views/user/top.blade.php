@@ -14,9 +14,21 @@
                         <a href="{{ route('user.top') }}">apparelECsite</a>
                     </div>
                     <div class="center_section">
-                        <form action="{{ route('search.results') }}" method="GET">
-                            <input type="text" name="query" placeholder="検索キーワードを入力" required>
-                            <button type="submit">検索</button>
+                        <form action="{{ route('user.product.list') }}" method="GET">
+                            <select name="category" id="category" class="category_box">
+                                <option value="" selected>すべて</option>
+                                @if($categories->isEmpty())
+                                    <option disabled>カテゴリがありません</option>
+                                @else
+                                    @foreach($categories as $category)
+                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                            <input type="text" name="query" class="search_box" placeholder="検索キーワードを入力" required>
+                            <button type="submit" class="query_button">
+                                <i class="fas fa-search"></i>
+                            </button>
                         </form>
                     </div>
                     <div class="end_section">
@@ -37,10 +49,28 @@
                     <div class="start_section">
                         <a href="{{ route('user.top') }}">apparelECsite</a>
                     </div>
-                    <div class="center_section"></div>
+                    <div class="center_section">
+                        <form action="{{ route('user.product.list') }}" method="GET">
+                            <select name="category" id="category" class="category_box">
+                                <option value="" selected>すべて</option>
+                                @if($categories->isEmpty())
+                                    <option disabled>カテゴリがありません</option>
+                                @else
+                                    @foreach($categories as $category)
+                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                            <input type="text" name="query" class="search_box" placeholder="検索キーワードを入力" required>
+                            <button type="submit" class="query_button">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </form>
+                    </div>
                     <div class="end_section">
                         <ul class="header_ul">
                             <li class="header_link"><a class="link_text" href="{{ route('user.cart.list') }}">カート</a></li>
+                            <li class="header_link"><a class="link_text" href="{{ route('user.mypage.list') }}">マイページ</a></li>
                             <li class="header_link">
                                 <a class="link_text_logout" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ログアウト</a>
                                 <form id="logout-form" action="{{ route('auth.logout') }}" method="POST" style="display: none;">
@@ -58,7 +88,7 @@
                     <a href="{{ route('user.top') }}">apparelECsite</a>
                 </div>
                 <div class="center_section">
-                    <form action="{{ route('user.search.results') }}" method="GET">
+                    <form action="{{ route('user.product.list') }}" method="GET">
                         <select name="category" id="category" class="category_box">
                             <option value="" selected>すべて</option>
                             @if($categories->isEmpty())

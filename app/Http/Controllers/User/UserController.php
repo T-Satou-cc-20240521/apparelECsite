@@ -12,23 +12,7 @@ class UserController extends Controller
     public function top()
     {
         $categories = Category::all();
-        $banners = Banner::where('is_active', 1)
-            ->where('start_at', '<=', now())
-            ->where('end_at', '>=', now())
-            ->orderBy('priority', 'desc')
-            ->get();
-
+        $banners = Banner::active()->get();
         return view('user.top', compact('categories', 'banners'));
-    }
-
-    public function searchForm()
-    {
-        $categories = Category::all();
-        return view('search.form', compact('categories'));
-    }
-
-    public function showBanners()
-    {
-        
     }
 }

@@ -2,46 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class User extends Model
+class User extends Authenticatable
 {
-    use HasFactory;
+    use Notifiable;
 
-    /**
-     * テーブル名
-     *
-     * @var string
-     */
     protected $table = 'users';
-
-    /**
-     * 主キーのカラム名
-     *
-     * @var string
-     */
     protected $primaryKey = 'id';
-
-    /**
-     * 自動インクリメントするIDの型
-     *
-     * @var string
-     */
     protected $keyType = 'int';
-
-    /**
-     * タイムスタンプを使うか
-     *
-     * @var bool
-     */
     public $timestamps = true;
 
-    /**
-     * マスアサインメント可能な属性
-     *
-     * @var array
-     */
     protected $fillable = [
         'name',
         'email',
@@ -50,38 +22,33 @@ class User extends Model
         'address',
         'email_verified_at',
         'is_active',
-        'is_admin'
+        'is_admin',
     ];
 
-    /**
-     * キャストする属性
-     *
-     * @var array
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
         'is_active' => 'boolean',
         'is_admin' => 'boolean',
     ];
 
-    /**
-     * パスワードをハッシュ化して設定するアクセサ
-     *
-     * @param  string  $value
-     * @return void
-     */
+    public function orders()
+{
+    return $this->hasMany(Order::class);
+}
+
     public function setPasswordAttribute($value)
     {
         $this->attributes['password_hash'] = bcrypt($value);
     }
 
-    /**
-     * リメンバートークンの設定
-     *
-     * @return string
-     */
+    public function getAuthPassword()
+    {
+        return $this->password_hash;
+    }
+
     public function getRememberTokenName()
     {
         return 'remember_token';
     }
 }
+

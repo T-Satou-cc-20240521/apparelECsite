@@ -52,19 +52,22 @@ Route::group(['prefix' => '/user', 'as' => 'user.'], function () {
     Route::get('/product/{id}', [UserProductController::class, 'detail'])->name('product.detail');
     Route::get('/cart/list', [CartController::class, 'list'])->name('cart.list');
     Route::get('/cart/{id}', [CartController::class, 'detail'])->name('cart.detail');
-    Route::get('/search', [SearchController::class, 'top'])->name('search.top');
-    Route::get('/search/results', [SearchController::class, 'results'])->name('search.results');
 });
 
 // 一般ユーザー（ログイン時のみ可）
 Route::group(['prefix' => '/user', 'as' => 'user.', 'middleware' => 'auth'], function () {
     Route::post('/favorite/{id}', [FavoriteController::class, 'toggle'])->name('favorite.toggle');
-    Route::get('/MyPage/edit', [MyPageController::class, 'edit'])->name('MyPage.edit');
-    Route::post('/MyPage/update', [MyPageController::class, 'update'])->name('MyPage.update');
-    Route::get('/', [UserOrderController::class, 'index'])->name('index');
-    Route::get('/{id}', [UserOrderController::class, 'detail'])->name('detail');
+    Route::get('/favorites', [FavoriteController::class, 'list'])->name('favorites.list');
+    Route::get('/mypage/list', [MyPageController::class, 'list'])->name('mypage.list');
+    Route::get('/mypage/edit', [MyPageController::class, 'edit'])->name('mypage.edit');
+    Route::post('/mypage/confirm', [MyPageController::class, 'confirm'])->name('mypage.confirm');
+    Route::post('/mypage/update', [MyPageController::class, 'update'])->name('mypage.update');
+    Route::get('/', [UserOrderController::class, 'list'])->name('user_order.list');
+    Route::get('/{id}', [UserOrderController::class, 'detail'])->name('user_order.detail');
     Route::post('/cart/confirm', [CartController::class, 'confirm'])->name('cart.confirm');
     Route::post('/cart/complete', [CartController::class, 'complete'])->name('cart.complete');
+    Route::get('/auth/{provider}/redirect', [SocialLoginController::class, 'redirectToProvider'])->name('auth.redirect');
+    Route::get('/auth/{provider}/callback', [SocialLoginController::class, 'handleProviderCallback'])->name('auth.callback');
 });
 
 Route::get('/', function () {
